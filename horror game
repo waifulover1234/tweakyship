@@ -1,0 +1,37 @@
+using UnityEngine;
+
+public class JumpScareTrigger : MonoBehaviour
+{
+    public GameObject jumpScareObject;
+    public AudioClip jumpScareSound;
+
+    private bool hasTriggered = false;
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (!hasTriggered && other.CompareTag("Player"))
+        {
+            hasTriggered = true;
+            ShowJumpScare();
+        }
+    }
+
+    void ShowJumpScare()
+    {
+        // Activate the jump scare object
+        jumpScareObject.SetActive(true);
+
+        // Play jump scare sound
+        AudioSource.PlayClipAtPoint(jumpScareSound, transform.position, 1f);
+
+        // You can add more effects, animations, or actions here
+
+        // Disable the jump scare object after a delay
+        Invoke("DisableJumpScare", 2f);
+    }
+
+    void DisableJumpScare()
+    {
+        jumpScareObject.SetActive(false);
+    }
+}
